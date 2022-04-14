@@ -9,7 +9,7 @@ export const NikeShoesDatabase = [
     discountPrice: 145,
     normalPrice: 170,
     primaryColor: "#9fb20b",
-    secondaryColor: "#edf6a7",
+    secondaryColor: "#e8f5d7",
     sizes: [
       { size: 5, available: true },
       { size: 5.5, available: true },
@@ -47,7 +47,7 @@ export const NikeShoesDatabase = [
     discountPrice: null,
     normalPrice: 175,
     primaryColor: "#c97e10",
-    secondaryColor: "#f9d8a7",
+    secondaryColor: "#f5e3ce",
     sizes: [
       { size: 6, available: true },
       { size: 6.5, available: true },
@@ -84,7 +84,7 @@ export const NikeShoesDatabase = [
     discountPrice: null,
     normalPrice: 130,
     primaryColor: "#930c18",
-    secondaryColor: "#fbc5ca",
+    secondaryColor: "#f5ceda",
     sizes: [
       { size: 6, available: false },
       { size: 6.5, available: false },
@@ -120,7 +120,7 @@ export const NikeShoesDatabase = [
     discountPrice: null,
     normalPrice: 120,
     primaryColor: "#13538f",
-    secondaryColor: "#bfdcf8",
+    secondaryColor: "#ced7f5",
     sizes: [
       { size: 6, available: true },
       { size: 6.5, available: true },
@@ -145,8 +145,22 @@ export const NikeShoesDatabase = [
     ],
     images: [
       require("./images/ZoomPegasus3.png"),
-      require("./images/ZoomPegasus1.png"),
       require("./images/ZoomPegasus2.png"),
+      require("./images/ZoomPegasus1.png"),
     ],
   },
+];
+
+export const primaryColors = [
+  NikeShoesDatabase[0].primaryColor,
+  NikeShoesDatabase[1].primaryColor,
+  NikeShoesDatabase[2].primaryColor,
+  NikeShoesDatabase[3].primaryColor,
+];
+
+export const secondaryColors = [
+  NikeShoesDatabase[0].secondaryColor,
+  NikeShoesDatabase[1].secondaryColor,
+  NikeShoesDatabase[2].secondaryColor,
+  NikeShoesDatabase[3].secondaryColor,
 ];

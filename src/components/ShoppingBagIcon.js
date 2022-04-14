@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
     top: 50,
     alignItems: "center",
     justifyContent: "center",
+    zIndex: 999,
   },
   numberOfItemsContainer: {
     width: 14,
