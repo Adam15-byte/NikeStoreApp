@@ -10,7 +10,10 @@ const Stack = createStackNavigator();
 const Navigation = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Navigator
+        screenOptions={{ headerShown: false }}
+        initialRouteName="BrowseScreen"
+      >
         <Stack.Screen name="BrowseScreen" component={BrowseScreen} />
         <Stack.Screen name="ShoppingCart" component={ShoppingCart} />
       </Stack.Navigator>

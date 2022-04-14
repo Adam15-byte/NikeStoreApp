@@ -144,9 +144,9 @@ export const NikeShoesDatabase = [
       { size: 18, available: false },
     ],
     images: [
+      require("./images/ZoomPegasus3.png"),
       require("./images/ZoomPegasus1.png"),
       require("./images/ZoomPegasus2.png"),
-      require("./images/ZoomPegasus3.png"),
     ],
   },
 ];
