@@ -6,7 +6,7 @@ import {
   Image,
   FlatList,
 } from "react-native";
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { COLORS } from "../../assets/COLORS";
 import ShoppingBagIcon from "../components/ShoppingBagIcon";
 import {
@@ -21,21 +21,34 @@ import Animated, {
   useAnimatedStyle,
   useDerivedValue,
   useSharedValue,
+  interpolate,
+  Extrapolate,
 } from "react-native-reanimated";
 import Svg, { SvgUri } from "react-native-svg";
 import ThumnbailList from "../components/ThumnbailList";
 import { ThumbnailChoiceContext } from "../service/ThumbnailChoiceContext";
+import ShoeSwipeImage from "../components/ShoeSwipeImage";
+import AnimatingDots from "../components/AnimatingDots";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
 const BrowseScreen = () => {
-  const { chosenThumbnail } = useContext(ThumbnailChoiceContext);
+  const [currentIndex, setCurrentIndex] = useState(0);
   // value to keep track of scrolling
   const translateX = useSharedValue(0);
   const scrollHandler = useAnimatedScrollHandler((event) => {
     translateX.value = event.contentOffset.x;
   });
-
+  const onScrollEnd = (event) => {
+    let pageNumber = Math.min(
+      Math.max(
+        Math.floor(event.nativeEvent.contentOffset.x / SCREEN_WIDTH + 0.5) + 1,
+        0
+      ),
+      NikeShoesDatabase.length
+    );
+    setCurrentIndex((prevState) => pageNumber - 1);
+  };
   // value derived from translateX to determine the ActiveIndex
   const activeIndex = useDerivedValue(() => {
     return translateX.value / SCREEN_WIDTH;
@@ -58,19 +71,6 @@ const BrowseScreen = () => {
     return { backgroundColor: backgroundColor };
   });
 
-  // render of the shoe image used by FlatList
-  const renderShoe = ({ item }) => {
-    return (
-      <Animated.View style={styles.shoeContainer}>
-        <Image
-          style={styles.shoeImage}
-          source={item.images[chosenThumbnail]}
-          resizeMode="contain"
-        />
-      </Animated.View>
-    );
-  };
-
   return (
     <View style={styles.mainContainer}>
       {/* Upper Half */}
@@ -81,11 +81,19 @@ const BrowseScreen = () => {
         <ShoppingBagIcon />
         <Animated.FlatList
           data={NikeShoesDatabase}
-          renderItem={renderShoe}
+          // render of the shoe image used by FlatList done in component
+          renderItem={({ item, index }) => (
+            <ShoeSwipeImage item={item} index={index} translateX={translateX} />
+          )}
+          // snap the swipe to page width
           pagingEnabled={true}
+          // scrollEventThrottle set to 16 to make the animation smoother
+          scrollEventThrottle={16}
           horizontal
           showsHorizontalScrollIndicator={false}
           onScroll={scrollHandler}
+          // on Momentum scroll take a function to globally assign current Index
+          onMomentumScrollEnd={onScrollEnd}
           style={styles.flatListStyle}
         />
         <Animated.View
@@ -95,20 +103,27 @@ const BrowseScreen = () => {
           style={styles.linearGradient}
           colors={["white", "transparent"]}
         />
+        {/* Animating dots container */}
+        <View style={styles.dotsContainer}>
+          <AnimatingDots activeIndex={activeIndex} translateX={translateX} />
+        </View>
       </Animated.View>
 
       {/* Bottom Half */}
       <Animated.View
         style={[styles.bottomDescriptionContainer, animatedSecondaryColor]}
       >
-        <Image
+        <Animated.Image
           source={require("../../assets/images/justdoit.png")}
           style={styles.justDoItImage}
           resizeMode="contain"
         />
         <View style={styles.bottomRightContainer}>
           <Text style={styles.shoeName}>{NikeShoesDatabase[3].name}</Text>
-          <ThumnbailList />
+          <ThumnbailList
+            activeIndex={activeIndex}
+            currentIndex={currentIndex}
+          />
         </View>
       </Animated.View>
     </View>
@@ -144,12 +159,12 @@ const styles = StyleSheet.create({
     height: "60%",
     width: 50,
   },
-  shoeContainer: {
-    width: SCREEN_WIDTH,
-    height: "90%",
+  dotsContainer: {
+    width: SCREEN_WIDTH / 2,
+    height: 50,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 40,
+    flexDirection: "row",
   },
   rectangleBackground: {
     width: SCREEN_WIDTH / 1.5,
@@ -157,14 +172,6 @@ const styles = StyleSheet.create({
     borderRadius: SCREEN_WIDTH / 1.9,
     position: "absolute",
     zIndex: 10,
-  },
-  shoeImage: {
-    maxWidth: "90%",
-    zIndex: 15,
-    shadowColor: COLORS.black,
-    shadowOffset: { width: 5, height: 5 },
-    shadowRadius: 5,
-    shadowOpacity: 0.2,
   },
   flatListStyle: {
     zIndex: 15,
