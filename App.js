@@ -2,9 +2,14 @@ import "react-native-gesture-handler";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import Navigation from "./Navigation";
+import { ThumbnailChoiceContextProvider } from "./src/service/ThumbnailChoiceContext";
 
 export default function App() {
-  return <Navigation />;
+  return (
+    <ThumbnailChoiceContextProvider>
+      <Navigation />
+    </ThumbnailChoiceContextProvider>
+  );
 }
 
 const styles = StyleSheet.create({

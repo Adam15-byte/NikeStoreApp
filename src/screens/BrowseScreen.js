@@ -6,7 +6,7 @@ import {
   Image,
   FlatList,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { COLORS } from "../../assets/COLORS";
 import ShoppingBagIcon from "../components/ShoppingBagIcon";
 import {
@@ -22,10 +22,14 @@ import Animated, {
   useDerivedValue,
   useSharedValue,
 } from "react-native-reanimated";
+import Svg, { SvgUri } from "react-native-svg";
+import ThumnbailList from "../components/ThumnbailList";
+import { ThumbnailChoiceContext } from "../service/ThumbnailChoiceContext";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
 const BrowseScreen = () => {
+  const { chosenThumbnail } = useContext(ThumbnailChoiceContext);
   // value to keep track of scrolling
   const translateX = useSharedValue(0);
   const scrollHandler = useAnimatedScrollHandler((event) => {
@@ -37,7 +41,7 @@ const BrowseScreen = () => {
     return translateX.value / SCREEN_WIDTH;
   });
 
-  const animatedBackgroundColor = useAnimatedStyle(() => {
+  const animatedSecondaryColor = useAnimatedStyle(() => {
     const backgroundColor = interpolateColor(
       activeIndex.value,
       [0, 1, 2, 3],
@@ -60,7 +64,7 @@ const BrowseScreen = () => {
       <Animated.View style={styles.shoeContainer}>
         <Image
           style={styles.shoeImage}
-          source={item.images[2]}
+          source={item.images[chosenThumbnail]}
           resizeMode="contain"
         />
       </Animated.View>
@@ -71,7 +75,7 @@ const BrowseScreen = () => {
     <View style={styles.mainContainer}>
       {/* Upper Half */}
       <Animated.View
-        style={[styles.upperScrollContainer, animatedBackgroundColor]}
+        style={[styles.upperScrollContainer, animatedSecondaryColor]}
         colors={["transparent", "#fbc5ca"]}
       >
         <ShoppingBagIcon />
@@ -95,15 +99,16 @@ const BrowseScreen = () => {
 
       {/* Bottom Half */}
       <Animated.View
-        style={[styles.bottomDescriptionContainer, animatedBackgroundColor]}
+        style={[styles.bottomDescriptionContainer, animatedSecondaryColor]}
       >
         <Image
           source={require("../../assets/images/justdoit.png")}
           style={styles.justDoItImage}
           resizeMode="contain"
         />
-        <View>
-          <Text>KLIK</Text>
+        <View style={styles.bottomRightContainer}>
+          <Text style={styles.shoeName}>{NikeShoesDatabase[3].name}</Text>
+          <ThumnbailList />
         </View>
       </Animated.View>
     </View>
@@ -137,6 +142,7 @@ const styles = StyleSheet.create({
     marginTop: "auto",
     marginBottom: "auto",
     height: "60%",
+    width: 50,
   },
   shoeContainer: {
     width: SCREEN_WIDTH,
@@ -168,5 +174,18 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     position: "absolute",
     zIndex: 1,
+  },
+  bottomRightContainer: {
+    width: "100%",
+    height: "100%",
+    padding: 20,
+    width: SCREEN_WIDTH - 110,
+    alignItems: "center",
+  },
+  shoeName: {
+    fontWeight: "800",
+    fontSize: 18,
+    letterSpacing: 1.1,
+    textAlign: "center",
   },
 });
