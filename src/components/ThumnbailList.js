@@ -62,6 +62,7 @@ const ThumnbailList = ({ activeIndex, currentIndex }) => {
         renderItem={renderImageThumbnail}
         scrollEnabled={false}
         keyExtractor={(_, index) => index}
+        style={{ maxHeight: 70, marginVertical: 10 }}
       />
     </>
   );
@@ -78,7 +79,7 @@ const styles = StyleSheet.create({
   },
   viewContainer: {
     marginHorizontal: 5,
-    marginTop: 10,
+    marginTop: 0,
     padding: 3,
   },
 });

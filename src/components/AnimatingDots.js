@@ -1,23 +1,44 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Dimensions } from "react-native";
 import React from "react";
 import Animated, {
   useAnimatedStyle,
   interpolateColor,
+  Extrapolate,
 } from "react-native-reanimated";
 import { NikeShoesDatabase } from "../../assets/ShoesData";
 import { COLORS } from "../../assets/COLORS";
 import { backgroundColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 
+const { width: SCREEN_WIDTH } = Dimensions.get("window");
 const AnimatingDots = ({ translateX, activeIndex }) => {
   return (
     <>
       {NikeShoesDatabase.map((item, index) => {
         const borderAnimatedOutline = useAnimatedStyle(() => {
-          return {};
+          const backgroundColor = interpolateColor(
+            translateX.value,
+            [
+              (index - 1) * SCREEN_WIDTH,
+              index * SCREEN_WIDTH,
+              (index + 1) * SCREEN_WIDTH,
+            ],
+            [COLORS.white, COLORS.black, COLORS.white]
+          );
+          return {
+            backgroundColor,
+          };
         });
         return (
           <Animated.View
-            style={[styles.dot, { backgroundColor: item.primaryColor }]}
+            key={index}
+            style={[
+              styles.dot,
+              borderAnimatedOutline,
+              // {
+              //   backgroundColor: item.primaryColor,
+              //   borderColor: borderAnimatedOutline,
+              // },
+            ]}
           />
         );
       })}
@@ -29,11 +50,12 @@ export default AnimatingDots;
 
 const styles = StyleSheet.create({
   dot: {
-    width: 10,
-    height: 10,
+    width: 14,
+    height: 14,
     borderRadius: 5,
     marginLeft: "auto",
     marginRight: "auto",
-    opacity: 0.7,
+    opacity: 0.8,
+    borderWidth: 1,
   },
 });

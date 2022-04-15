@@ -29,6 +29,7 @@ import ThumnbailList from "../components/ThumnbailList";
 import { ThumbnailChoiceContext } from "../service/ThumbnailChoiceContext";
 import ShoeSwipeImage from "../components/ShoeSwipeImage";
 import AnimatingDots from "../components/AnimatingDots";
+import SizePicker from "../components/SizePicker";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
@@ -119,11 +120,31 @@ const BrowseScreen = () => {
           resizeMode="contain"
         />
         <View style={styles.bottomRightContainer}>
-          <Text style={styles.shoeName}>{NikeShoesDatabase[3].name}</Text>
+          <View style={styles.additionalInfoContainer}>
+            {NikeShoesDatabase[currentIndex].additional ? (
+              <Text style={styles.additionalText}>
+                {NikeShoesDatabase[currentIndex].additional}
+              </Text>
+            ) : null}
+          </View>
+
+          <Text style={styles.shoeName}>
+            {NikeShoesDatabase[currentIndex].name}
+          </Text>
+          <Text style={styles.shoeTypeText}>
+            {NikeShoesDatabase[currentIndex].type}
+          </Text>
           <ThumnbailList
             activeIndex={activeIndex}
             currentIndex={currentIndex}
           />
+          <Text numberOfLines={4} style={styles.description}>
+            {NikeShoesDatabase[currentIndex].description}
+          </Text>
+          <View style={styles.sizePickerContainer}>
+            <Text style={styles.shoeTypeText}>Select Size</Text>
+            <SizePicker currentIndex={currentIndex} />
+          </View>
         </View>
       </Animated.View>
     </View>
@@ -187,12 +208,33 @@ const styles = StyleSheet.create({
     height: "100%",
     padding: 20,
     width: SCREEN_WIDTH - 110,
-    alignItems: "center",
+    alignItems: "flex-start",
   },
   shoeName: {
     fontWeight: "800",
     fontSize: 18,
     letterSpacing: 1.1,
     textAlign: "center",
+  },
+  additionalInfoContainer: {
+    height: 20,
+  },
+  additionalText: {
+    fontSize: 12,
+    fontWeight: "700",
+    color: COLORS.orange,
+  },
+  shoeTypeText: {
+    fontWeight: "500",
+  },
+  description: {
+    textAlign: "justify",
+    color: "#7a7a7a",
+  },
+  sizePickerContainer: {
+    width: SCREEN_WIDTH - 110,
+    height: 70,
+    marginVertical: 10,
+    justifyContent: "center",
   },
 });
