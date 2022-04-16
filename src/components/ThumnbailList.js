@@ -40,7 +40,6 @@ const ThumnbailList = ({ activeIndex, currentIndex }) => {
           style={[
             styles.viewContainer,
             {
-              padding: 3,
               borderWidth: 1,
               borderColor: isSelected() ? COLORS.orange : "transparent",
               borderRadius: 10,
@@ -80,6 +79,5 @@ const styles = StyleSheet.create({
   viewContainer: {
     marginHorizontal: 5,
     marginTop: 0,
-    padding: 3,
   },
 });

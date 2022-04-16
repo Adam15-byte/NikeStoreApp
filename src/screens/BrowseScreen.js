@@ -138,9 +138,9 @@ const BrowseScreen = () => {
             activeIndex={activeIndex}
             currentIndex={currentIndex}
           />
-          <Text numberOfLines={4} style={styles.description}>
-            {NikeShoesDatabase[currentIndex].description}
-          </Text>
+            <Text numberOfLines={4} style={styles.description}>
+              {NikeShoesDatabase[currentIndex].description}
+            </Text>
           <View style={styles.sizePickerContainer}>
             <Text style={styles.shoeTypeText}>Select Size</Text>
             <SizePicker currentIndex={currentIndex} />

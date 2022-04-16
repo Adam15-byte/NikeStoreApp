@@ -3,12 +3,14 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import Navigation from "./Navigation";
 import { ThumbnailChoiceContextProvider } from "./src/service/ThumbnailChoiceContext";
-
+import { SizeChoiceContextProvider } from "./src/service/SizeChoiceContext";
 export default function App() {
   return (
-    <ThumbnailChoiceContextProvider>
-      <Navigation />
-    </ThumbnailChoiceContextProvider>
+    <SizeChoiceContextProvider>
+      <ThumbnailChoiceContextProvider>
+        <Navigation />
+      </ThumbnailChoiceContextProvider>
+    </SizeChoiceContextProvider>
   );
 }
 
