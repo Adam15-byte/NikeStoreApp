@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { createContext, useState, useEffect } from "react";
+import { NikeShoesDatabase } from "../../assets/ShoesData";
 
 export const SizeChoiceContext = createContext();
 export const SizeChoiceContextProvider = ({ children }) => {
@@ -9,12 +10,18 @@ export const SizeChoiceContextProvider = ({ children }) => {
     2: null,
     3: null,
   });
-  const addSizeChoice = (index, size) => {
-    setChosenSize((prevState) => ({ ...prevState, [index]: size }));
+  const addSizeChoice = (index, size, sizeObjectIndex) => {
+    if (NikeShoesDatabase[index].sizes[sizeObjectIndex].available === false) {
+      null;
+    } else {
+      if (chosenSize[index] === size) {
+        setChosenSize((prevState) => ({ ...prevState, [index]: null }));
+      } else {
+        setChosenSize((prevState) => ({ ...prevState, [index]: size }));
+      }
+    }
   };
-  useEffect(() => {
-    console.log(chosenSize);
-  }, [chosenSize]);
+
   return (
     <SizeChoiceContext.Provider
       value={{ chosenSize, addSizeChoice: addSizeChoice }}

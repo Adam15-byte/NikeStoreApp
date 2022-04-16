@@ -13,6 +13,7 @@ const SizePickerCell = ({ item, index, translateX, currentIndex }) => {
   const { chosenSize, addSizeChoice } = useContext(SizeChoiceContext);
   const isFirst = index === 0;
   const isAvailable = item.available === true;
+  const theChosenOne = item.size === chosenSize[currentIndex];
   const cellAnimatedStyle = useAnimatedStyle(() => {
     const scale = interpolate(
       translateX.value,
@@ -33,7 +34,7 @@ const SizePickerCell = ({ item, index, translateX, currentIndex }) => {
 
   return (
     <TouchableWithoutFeedback
-      onPress={() => addSizeChoice(currentIndex, item.size)}
+      onPress={() => addSizeChoice(currentIndex, item.size, index)}
     >
       <Animated.View
         style={[
@@ -42,6 +43,7 @@ const SizePickerCell = ({ item, index, translateX, currentIndex }) => {
           {
             marginLeft: isFirst ? 0 : 10,
             backgroundColor: isAvailable ? COLORS.white : COLORS.lightgrey,
+            borderColor: theChosenOne ? COLORS.orange : COLORS.darkgrey,
           },
         ]}
       >
@@ -64,6 +66,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
-    borderColor: COLORS.darkgrey,
   },
 });

@@ -4,13 +4,16 @@ import { StyleSheet, Text, View } from "react-native";
 import Navigation from "./Navigation";
 import { ThumbnailChoiceContextProvider } from "./src/service/ThumbnailChoiceContext";
 import { SizeChoiceContextProvider } from "./src/service/SizeChoiceContext";
+import { ShoppingBagContextProvider } from "./src/service/ShoppingBagContext";
 export default function App() {
   return (
-    <SizeChoiceContextProvider>
-      <ThumbnailChoiceContextProvider>
-        <Navigation />
-      </ThumbnailChoiceContextProvider>
-    </SizeChoiceContextProvider>
+    <ShoppingBagContextProvider>
+      <SizeChoiceContextProvider>
+        <ThumbnailChoiceContextProvider>
+          <Navigation />
+        </ThumbnailChoiceContextProvider>
+      </SizeChoiceContextProvider>
+    </ShoppingBagContextProvider>
   );
 }
 

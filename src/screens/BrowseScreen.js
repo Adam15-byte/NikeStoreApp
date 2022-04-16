@@ -30,10 +30,16 @@ import { ThumbnailChoiceContext } from "../service/ThumbnailChoiceContext";
 import ShoeSwipeImage from "../components/ShoeSwipeImage";
 import AnimatingDots from "../components/AnimatingDots";
 import SizePicker from "../components/SizePicker";
+import PriceContainer from "../components/PriceContainer";
+import BlackButton from "../components/BlackButton";
+import { ShoppingBagContext } from "../service/ShoppingBagContext";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
 const BrowseScreen = () => {
+  const { sizeTextAnimatedStyle, changeSizeTextColor } =
+    useContext(ShoppingBagContext);
   const [currentIndex, setCurrentIndex] = useState(0);
   // value to keep track of scrolling
   const translateX = useSharedValue(0);
@@ -114,11 +120,14 @@ const BrowseScreen = () => {
       <Animated.View
         style={[styles.bottomDescriptionContainer, animatedSecondaryColor]}
       >
-        <Animated.Image
-          source={require("../../assets/images/justdoit.png")}
-          style={styles.justDoItImage}
-          resizeMode="contain"
-        />
+        <TouchableOpacity onPress={changeSizeTextColor}>
+          <Image
+            source={require("../../assets/images/justdoit.png")}
+            style={styles.justDoItImage}
+            resizeMode="contain"
+          />
+        </TouchableOpacity>
+
         <View style={styles.bottomRightContainer}>
           <View style={styles.additionalInfoContainer}>
             {NikeShoesDatabase[currentIndex].additional ? (
@@ -138,12 +147,22 @@ const BrowseScreen = () => {
             activeIndex={activeIndex}
             currentIndex={currentIndex}
           />
-            <Text numberOfLines={4} style={styles.description}>
-              {NikeShoesDatabase[currentIndex].description}
-            </Text>
+          <Text numberOfLines={4} style={styles.description}>
+            {NikeShoesDatabase[currentIndex].description}
+          </Text>
           <View style={styles.sizePickerContainer}>
-            <Text style={styles.shoeTypeText}>Select Size</Text>
+            <Animated.Text style={[styles.shoeTypeText, sizeTextAnimatedStyle]}>
+              Select Size
+            </Animated.Text>
             <SizePicker currentIndex={currentIndex} />
+          </View>
+          <View style={styles.priceButtonContainer}>
+            <PriceContainer currentIndex={currentIndex} />
+            <BlackButton
+              text="Add to Bag"
+              width={SCREEN_WIDTH - 150}
+              padding={10}
+            />
           </View>
         </View>
       </Animated.View>
@@ -236,5 +255,9 @@ const styles = StyleSheet.create({
     height: 70,
     marginVertical: 10,
     justifyContent: "center",
+  },
+  priceButtonContainer: {
+    width: SCREEN_WIDTH - 110,
+    minHeight: 50,
   },
 });
