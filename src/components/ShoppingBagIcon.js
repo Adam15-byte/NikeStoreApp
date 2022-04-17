@@ -1,9 +1,12 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { COLORS } from "../../assets/COLORS";
+import { ShoppingBagContext } from "../service/ShoppingBagContext";
+import Animated, { BounceIn } from "react-native-reanimated";
 
 const ShoppingBagIcon = () => {
+  const { shoppingBag } = useContext(ShoppingBagContext);
   return (
     <View style={styles.shoppingBagIconContainer}>
       <TouchableOpacity activeOpacity={0.4}>
@@ -12,9 +15,14 @@ const ShoppingBagIcon = () => {
           size={30}
           color={COLORS.black}
         />
-        <View style={styles.numberOfItemsContainer}>
-          <Text style={styles.itemsText}>2</Text>
-        </View>
+        {shoppingBag.length !== 0 && (
+          <Animated.View
+            entering={BounceIn}
+            style={styles.numberOfItemsContainer}
+          >
+            <Text style={styles.itemsText}>{shoppingBag.length}</Text>
+          </Animated.View>
+        )}
       </TouchableOpacity>
     </View>
   );

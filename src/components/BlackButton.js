@@ -8,20 +8,37 @@ import Animated, {
   withDelay,
 } from "react-native-reanimated";
 import { ShoppingBagContext } from "../service/ShoppingBagContext";
+import { SizeChoiceContext } from "../service/SizeChoiceContext";
+import { NikeShoesDatabase } from "../../assets/ShoesData";
 
-const BlackButton = ({ text, width, padding }) => {
-  const { changeSizeTextColor } = ShoppingBagContext;
+const BlackButton = ({ text, width, padding, currentIndex }) => {
+  const { changeSizeTextColor, addItemToShoppingBag } =
+    useContext(ShoppingBagContext);
+  const { chosenSize } = useContext(SizeChoiceContext);
   const bgColor = useSharedValue(COLORS.black);
   const displayText = useSharedValue(text);
   const animatedStyle = useAnimatedStyle(() => {
     return { backgroundColor: bgColor.value };
   });
-  const animate = () => {
-    bgColor.value = withTiming(COLORS.orange);
-    bgColor.value = withDelay(1000, withTiming(COLORS.black));
+  const animateAndAddToBag = () => {
+    if (chosenSize[currentIndex] === null) {
+      changeSizeTextColor();
+    } else {
+      addItemToShoppingBag(
+        NikeShoesDatabase[currentIndex].name,
+        NikeShoesDatabase[currentIndex].normalPrice,
+        NikeShoesDatabase[currentIndex].discountPrice,
+        NikeShoesDatabase[currentIndex].images,
+        NikeShoesDatabase[currentIndex].primaryColor,
+        NikeShoesDatabase[currentIndex].secondaryColor,
+        chosenSize[currentIndex]
+      );
+      bgColor.value = withTiming(COLORS.orange);
+      bgColor.value = withDelay(1000, withTiming(COLORS.black));
+    }
   };
   return (
-    <TouchableWithoutFeedback onPress={animate}>
+    <TouchableWithoutFeedback onPress={animateAndAddToBag}>
       <Animated.View
         style={[
           styles.buttonContainer,

@@ -162,6 +162,7 @@ const BrowseScreen = () => {
               text="Add to Bag"
               width={SCREEN_WIDTH - 150}
               padding={10}
+              currentIndex={currentIndex}
             />
           </View>
         </View>

@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import { NikeShoesDatabase } from "../../assets/ShoesData";
 import Animated, {
   useAnimatedStyle,
@@ -23,11 +23,43 @@ export const ShoppingBagContextProvider = ({ children }) => {
       withTiming(COLORS.black, { duration: 10 })
     );
   };
+
+  const [shoppingBag, setShoppingBag] = useState([]);
+  const addItemToShoppingBag = (
+    name,
+    normalPrice,
+    discountPrice,
+    images,
+    primaryColor,
+    secondaryColor,
+    size
+  ) => {
+    setShoppingBag((prevState) => [
+      ...prevState,
+      {
+        id: Math.random(),
+        normalPrice,
+        discountPrice,
+        name,
+        images,
+        primaryColor,
+        secondaryColor,
+        size,
+        quantity: 1,
+      },
+    ]);
+  };
+  useEffect(() => {
+    console.log(shoppingBag);
+  }, [shoppingBag]);
+
   return (
     <ShoppingBagContext.Provider
       value={{
         sizeTextAnimatedStyle,
         changeSizeTextColor: changeSizeTextColor,
+        addItemToShoppingBag: addItemToShoppingBag,
+        shoppingBag,
       }}
     >
       {children}

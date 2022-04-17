@@ -12,19 +12,24 @@ const PriceContainer = ({ currentIndex }) => {
         NikeShoesDatabase[currentIndex].normalPrice
     );
   return (
-    <View style={styles.mainContainer}>
-      <Text style={styles.normalPriceText}>
-        $ {NikeShoesDatabase[currentIndex].normalPrice}
-      </Text>
-      {NikeShoesDatabase[currentIndex].discountPrice && (
-        <Text style={styles.discountPriceText}>
-          $ {NikeShoesDatabase[currentIndex].discountPrice}
+    <>
+      {NikeShoesDatabase[currentIndex].discountPrice === null && (
+        <Text style={styles.normalPriceText}>
+          $ {NikeShoesDatabase[currentIndex].normalPrice}
         </Text>
       )}
-      {NikeShoesDatabase[currentIndex].discountPrice && (
-        <Text style={styles.offPercent}>{discountRate}% off</Text>
+      {NikeShoesDatabase[currentIndex].discountPrice !== null && (
+        <View style={styles.mainContainer}>
+          <Text style={styles.normalPriceText}>
+            $ {NikeShoesDatabase[currentIndex].discountPrice}
+          </Text>
+          <Text style={styles.discountPriceText}>
+            $ {NikeShoesDatabase[currentIndex].normalPrice}
+          </Text>
+          <Text style={styles.offPercent}>{discountRate}% off</Text>
+        </View>
       )}
-    </View>
+    </>
   );
 };
 
