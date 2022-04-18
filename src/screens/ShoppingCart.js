@@ -13,12 +13,18 @@ import ShoppingBagItem from "../components/ShoppingBagItem";
 import Animated from "react-native-reanimated";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import CheckoutBlackButton from "../components/CheckoutBlackButton";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
 const ShoppingCart = () => {
-  const { shoppingBag, removeItemFromShoppingBag, moreQuantity, lessQuantity } =
-    useContext(ShoppingBagContext);
+  const {
+    shoppingBag,
+    removeItemFromShoppingBag,
+    moreQuantity,
+    lessQuantity,
+    totalPrice,
+  } = useContext(ShoppingBagContext);
 
   const navigation = useNavigation();
   return (
@@ -45,6 +51,10 @@ const ShoppingCart = () => {
           )}
           style={{ paddingTop: 15 }}
         />
+        <View style={styles.bottomContainer}>
+          <Text style={styles.totalPriceText}>$ {totalPrice.toFixed(2)}</Text>
+          <CheckoutBlackButton />
+        </View>
       </View>
     </View>
   );
@@ -61,13 +71,13 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
   },
   topContainer: {
-    height: 100,
+    height: 70,
     width: "100%",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: 30,
-    marginTop: 30,
+    marginTop: 40,
   },
   headerText: {
     fontWeight: "800",
@@ -79,5 +89,21 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.lightgrey,
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
+  },
+  bottomContainer: {
+    width: "100%",
+    height: 250,
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
+    backgroundColor: COLORS.white,
+    bottom: 0,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingTop: 50,
+    paddingHorizontal: 40,
+  },
+  totalPriceText: {
+    fontSize: 20,
+    fontWeight: "800",
   },
 });

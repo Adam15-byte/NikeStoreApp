@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-around",
     height: "100%",
-    paddingVertical: 10,
+    paddingVertical: 5,
   },
   statsContainer: {
     height: ICON_HEIGHT,
@@ -127,13 +127,13 @@ const styles = StyleSheet.create({
   },
   mainPrice: {
     color: COLORS.black,
-    fontWeight: "500",
+    fontWeight: "600",
     fontSize: 14,
   },
   minusButton: {
-    width: 26,
-    height: 26,
-    borderRadius: 13,
+    width: 30,
+    height: 30,
+    borderRadius: 15,
     backgroundColor: COLORS.lightgrey,
     alignItems: "center",
     justifyContent: "center",
@@ -143,9 +143,9 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 1, height: 3 },
   },
   plusButton: {
-    width: 26,
-    height: 26,
-    borderRadius: 13,
+    width: 30,
+    height: 30,
+    borderRadius: 15,
     backgroundColor: COLORS.darkgrey,
     alignItems: "center",
     justifyContent: "center",
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 1, height: 3 },
   },
   quantityText: {
-    fontWeight: "600",
+    fontWeight: "700",
     fontSize: 12,
     color: COLORS.black,
   },

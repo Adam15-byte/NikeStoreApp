@@ -76,6 +76,20 @@ export const ShoppingBagContextProvider = ({ children }) => {
       setShoppingBag(newShoppingBag);
     }
   };
+
+  const [totalPrice, setTotalPrice] = useState(0);
+  useEffect(() => {
+    let total = 0;
+    const itemTotal = shoppingBag.map((item) => {
+      if (item.discountPrice === null) {
+        total = total + item.quantity * item.normalPrice;
+      } else {
+        total = total + item.quantity * item.discountPrice;
+      }
+    });
+    setTotalPrice((prevState) => total);
+  }, [shoppingBag]);
+
   return (
     <ShoppingBagContext.Provider
       value={{
@@ -86,9 +100,10 @@ export const ShoppingBagContextProvider = ({ children }) => {
         shoppingBag,
         moreQuantity: moreQuantity,
         lessQuantity: lessQuantity,
+        totalPrice,
       }}
     >
       {children}
     </ShoppingBagContext.Provider>
   );
-};
+};;;
