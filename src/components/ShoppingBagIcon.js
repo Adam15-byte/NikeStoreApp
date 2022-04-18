@@ -4,12 +4,17 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { COLORS } from "../../assets/COLORS";
 import { ShoppingBagContext } from "../service/ShoppingBagContext";
 import Animated, { BounceIn } from "react-native-reanimated";
+import { useNavigation } from "@react-navigation/native";
 
 const ShoppingBagIcon = () => {
   const { shoppingBag } = useContext(ShoppingBagContext);
+  const navigation = useNavigation();
   return (
     <View style={styles.shoppingBagIconContainer}>
-      <TouchableOpacity activeOpacity={0.4}>
+      <TouchableOpacity
+        activeOpacity={0.4}
+        onPress={() => navigation.navigate("ShoppingCart")}
+      >
         <MaterialCommunityIcons
           name="shopping-outline"
           size={30}

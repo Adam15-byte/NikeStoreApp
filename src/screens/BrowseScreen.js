@@ -249,7 +249,7 @@ const styles = StyleSheet.create({
   },
   description: {
     textAlign: "justify",
-    color: "#7a7a7a",
+    color: COLORS.supergrey,
   },
   sizePickerContainer: {
     width: SCREEN_WIDTH - 110,

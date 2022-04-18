@@ -53,17 +53,39 @@ export const ShoppingBagContextProvider = ({ children }) => {
       },
     ]);
   };
-  useEffect(() => {
-    console.log(shoppingBag);
-  }, [shoppingBag]);
+  const removeItemFromShoppingBag = (id) => {
+    setShoppingBag((prevState) =>
+      shoppingBag.filter((item) => {
+        return item.id !== id;
+      })
+    );
+  };
 
+  const moreQuantity = (index) => {
+    const newShoppingBag = [...shoppingBag];
+    newShoppingBag[index].quantity++;
+    setShoppingBag(newShoppingBag);
+  };
+
+  const lessQuantity = (index) => {
+    const newShoppingBag = [...shoppingBag];
+    if (newShoppingBag[index].quantity === 1) {
+      removeItemFromShoppingBag(newShoppingBag[index].id);
+    } else {
+      newShoppingBag[index].quantity--;
+      setShoppingBag(newShoppingBag);
+    }
+  };
   return (
     <ShoppingBagContext.Provider
       value={{
         sizeTextAnimatedStyle,
         changeSizeTextColor: changeSizeTextColor,
         addItemToShoppingBag: addItemToShoppingBag,
+        removeItemFromShoppingBag: removeItemFromShoppingBag,
         shoppingBag,
+        moreQuantity: moreQuantity,
+        lessQuantity: lessQuantity,
       }}
     >
       {children}

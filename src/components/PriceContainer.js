@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   discountPriceText: {
     marginRight: "auto",
     fontWeight: "500",
-    color: "#7a7a7a",
+    color: COLORS.supergrey,
     textDecorationLine: "line-through",
   },
   offPercent: {

@@ -1,7 +1,7 @@
 export const NikeShoesDatabase = [
   {
     id: 1,
-    name: "Nike Air Max Genome",
+    name: "Air Max Genome",
     additional: "Sustainable Materials",
     type: "Men's Shoes",
     description:
@@ -39,7 +39,7 @@ export const NikeShoesDatabase = [
   },
   {
     id: 2,
-    name: "Nike Air Max Plus",
+    name: "Air Max Plus",
     additional: null,
     type: "Men's Shoes",
     description:
@@ -76,7 +76,7 @@ export const NikeShoesDatabase = [
   },
   {
     id: 3,
-    name: "Nike Pegasus Trail 3",
+    name: "Pegasus Trail 3",
     additional: null,
     type: "Men's Trail Running Shoes",
     description:
@@ -112,7 +112,7 @@ export const NikeShoesDatabase = [
   },
   {
     id: 4,
-    name: "Nike Air Zoom Pegasus 38",
+    name: "Air Zoom Pegasus 38",
     additional: null,
     type: "Men's Road Running Shoes",
     description:
