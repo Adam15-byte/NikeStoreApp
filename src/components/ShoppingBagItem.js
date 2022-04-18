@@ -1,15 +1,33 @@
 import { StyleSheet, Text, View, Dimensions, Image } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import { COLORS } from "../../assets/COLORS";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { ShoppingBagContext } from "../service/ShoppingBagContext";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
+import { FontAwesome } from "@expo/vector-icons";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
 const ICON_WIDTH = 90;
 const ICON_HEIGHT = 90;
 
 const ShoppingBagItem = ({ item, index, moreQuantity, lessQuantity }) => {
+  const { removeItemFromShoppingBag, deleteToggle } =
+    useContext(ShoppingBagContext);
   return (
     <View style={styles.mainContainer}>
+      {deleteToggle === true && (
+        <Animated.View
+          entering={FadeIn}
+          exiting={FadeOut}
+          style={styles.removeItem}
+        >
+          <TouchableWithoutFeedback
+            onPress={() => removeItemFromShoppingBag(item.id)}
+          >
+            <FontAwesome name="remove" size={24} color={COLORS.red} />
+          </TouchableWithoutFeedback>
+        </Animated.View>
+      )}
       <View style={styles.iconContainer}>
         <View
           style={[styles.outerCircle, { backgroundColor: item.secondaryColor }]}
@@ -158,5 +176,12 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 12,
     color: COLORS.black,
+  },
+  removeItem: {
+    position: "absolute",
+    top: -10,
+    left: -10,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

@@ -20,10 +20,11 @@ const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 const ShoppingCart = () => {
   const {
     shoppingBag,
-    removeItemFromShoppingBag,
     moreQuantity,
     lessQuantity,
     totalPrice,
+    deleteToggle,
+    changeDeleteToggle,
   } = useContext(ShoppingBagContext);
 
   const navigation = useNavigation();
@@ -34,25 +35,46 @@ const ShoppingCart = () => {
           <Ionicons name="arrow-back" size={24} color={COLORS.black} />
         </TouchableWithoutFeedback>
         <Text style={styles.headerText}>My Bag</Text>
-        <TouchableWithoutFeedback>
-          <Ionicons name="trash-outline" size={24} color={COLORS.supergrey} />
+        <TouchableWithoutFeedback onPress={() => changeDeleteToggle()}>
+          <Ionicons
+            name="trash-outline"
+            size={24}
+            color={deleteToggle ? COLORS.red : COLORS.supergrey}
+          />
         </TouchableWithoutFeedback>
       </View>
       <View style={styles.middleContainer}>
-        <FlatList
-          data={shoppingBag}
-          renderItem={({ item, index }) => (
-            <ShoppingBagItem
-              item={item}
-              index={index}
-              moreQuantity={moreQuantity}
-              lessQuantity={lessQuantity}
-            />
-          )}
-          style={{ paddingTop: 15 }}
-        />
+        {shoppingBag.length === 0 && (
+          <View>
+            <Text style={styles.noItemsText}>
+              No items in your shopping bag
+            </Text>
+          </View>
+        )}
+        {shoppingBag.length !== 0 && (
+          <FlatList
+            data={shoppingBag}
+            renderItem={({ item, index }) => (
+              <ShoppingBagItem
+                item={item}
+                index={index}
+                moreQuantity={moreQuantity}
+                lessQuantity={lessQuantity}
+              />
+            )}
+            style={{
+              paddingTop: 15,
+              height: SCREEN_HEIGHT - 130,
+              marginBottom: 130,
+              paddingBottom: 300,
+            }}
+          />
+        )}
         <View style={styles.bottomContainer}>
-          <Text style={styles.totalPriceText}>$ {totalPrice.toFixed(2)}</Text>
+          <View>
+            <Text style={styles.totalTitle}>Total:</Text>
+            <Text style={styles.totalPriceText}>$ {totalPrice.toFixed(2)}</Text>
+          </View>
           <CheckoutBlackButton />
         </View>
       </View>
@@ -81,29 +103,44 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontWeight: "800",
-    fontSize: 18,
+    fontSize: 20,
+    letterSpacing: 1.5,
   },
   middleContainer: {
     width: "100%",
-    height: "100%",
+    height: SCREEN_HEIGHT - 130,
     backgroundColor: COLORS.lightgrey,
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
   },
   bottomContainer: {
+    position: "absolute",
     width: "100%",
-    height: 250,
+    height: 130,
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     backgroundColor: COLORS.white,
     bottom: 0,
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingTop: 50,
+    alignItems: "center",
+    paddingTop: 10,
     paddingHorizontal: 40,
   },
   totalPriceText: {
     fontSize: 20,
     fontWeight: "800",
+  },
+  totalTitle: {
+    fontSize: 14,
+    fontWeight: "500",
+  },
+  noItemsText: {
+    color: COLORS.supergrey,
+    letterSpacing: 1.3,
+    fontSize: 18,
+    fontWeight: "400",
+    textAlign: "center",
+    marginTop: 30,
   },
 });

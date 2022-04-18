@@ -90,20 +90,26 @@ export const ShoppingBagContextProvider = ({ children }) => {
     setTotalPrice((prevState) => total);
   }, [shoppingBag]);
 
-  return (
-    <ShoppingBagContext.Provider
-      value={{
-        sizeTextAnimatedStyle,
-        changeSizeTextColor: changeSizeTextColor,
-        addItemToShoppingBag: addItemToShoppingBag,
-        removeItemFromShoppingBag: removeItemFromShoppingBag,
-        shoppingBag,
-        moreQuantity: moreQuantity,
-        lessQuantity: lessQuantity,
-        totalPrice,
-      }}
-    >
-      {children}
-    </ShoppingBagContext.Provider>
-  );
+const [deleteToggle, setDeleteToggle] = useState(false);
+const changeDeleteToggle = () => {
+  setDeleteToggle(!deleteToggle);
+};
+return (
+  <ShoppingBagContext.Provider
+    value={{
+      sizeTextAnimatedStyle,
+      changeSizeTextColor: changeSizeTextColor,
+      addItemToShoppingBag: addItemToShoppingBag,
+      removeItemFromShoppingBag: removeItemFromShoppingBag,
+      shoppingBag,
+      moreQuantity: moreQuantity,
+      lessQuantity: lessQuantity,
+      totalPrice,
+      deleteToggle,
+      changeDeleteToggle: changeDeleteToggle,
+    }}
+  >
+    {children}
+  </ShoppingBagContext.Provider>
+);
 };;;

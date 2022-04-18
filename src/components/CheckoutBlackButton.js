@@ -23,7 +23,7 @@ const CheckoutBlackButton = () => {
         style={[
           styles.buttonContainer,
           animatedStyle,
-          { width: width, padding: padding },
+          { width: 140, padding: 10 },
         ]}
       >
         <Text style={styles.textInside}>Check Out</Text>
@@ -40,7 +40,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 30,
-    marginVertical: 5,
   },
   textInside: {
     color: COLORS.white,
