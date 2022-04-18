@@ -10,10 +10,10 @@ import { COLORS } from "../../assets/COLORS";
 import { backgroundColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 
 const { width: SCREEN_WIDTH } = Dimensions.get("window");
-const AnimatingDots = ({ translateX, activeIndex }) => {
+const AnimatingDots = ({ translateX }) => {
   return (
     <>
-      {NikeShoesDatabase.map((item, index) => {
+      {NikeShoesDatabase.map((_, index) => {
         const borderAnimatedOutline = useAnimatedStyle(() => {
           const backgroundColor = interpolateColor(
             translateX.value,
@@ -31,14 +31,7 @@ const AnimatingDots = ({ translateX, activeIndex }) => {
         return (
           <Animated.View
             key={index}
-            style={[
-              styles.dot,
-              borderAnimatedOutline,
-              // {
-              //   backgroundColor: item.primaryColor,
-              //   borderColor: borderAnimatedOutline,
-              // },
-            ]}
+            style={[styles.dot, borderAnimatedOutline]}
           />
         );
       })}

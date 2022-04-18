@@ -18,6 +18,7 @@ import CheckoutBlackButton from "../components/CheckoutBlackButton";
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
 const ShoppingCart = () => {
+  // import of functions and states from context file
   const {
     shoppingBag,
     moreQuantity,
@@ -26,15 +27,16 @@ const ShoppingCart = () => {
     deleteToggle,
     changeDeleteToggle,
   } = useContext(ShoppingBagContext);
-
   const navigation = useNavigation();
   return (
     <View style={styles.mainContainer}>
       <View style={styles.topContainer}>
+        {/* Top bar container */}
         <TouchableWithoutFeedback onPress={() => navigation.goBack()}>
           <Ionicons name="arrow-back" size={24} color={COLORS.black} />
         </TouchableWithoutFeedback>
         <Text style={styles.headerText}>My Bag</Text>
+        {/* Pressable thrash icon */}
         <TouchableWithoutFeedback onPress={() => changeDeleteToggle()}>
           <Ionicons
             name="trash-outline"
@@ -44,6 +46,7 @@ const ShoppingCart = () => {
         </TouchableWithoutFeedback>
       </View>
       <View style={styles.middleContainer}>
+        {/* Text display in case there are no items in the shopping bag */}
         {shoppingBag.length === 0 && (
           <View>
             <Text style={styles.noItemsText}>
@@ -51,6 +54,7 @@ const ShoppingCart = () => {
             </Text>
           </View>
         )}
+        {/* Display of items in shopping bag */}
         {shoppingBag.length !== 0 && (
           <FlatList
             data={shoppingBag}
@@ -70,6 +74,7 @@ const ShoppingCart = () => {
             }}
           />
         )}
+        {/* Bottom container with total price and checkout button */}
         <View style={styles.bottomContainer}>
           <View>
             <Text style={styles.totalTitle}>Total:</Text>

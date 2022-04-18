@@ -38,14 +38,16 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
 
 const BrowseScreen = () => {
-  const { sizeTextAnimatedStyle, changeSizeTextColor } =
-    useContext(ShoppingBagContext);
+  // Import of Animated style for "Select size" text
+  const { sizeTextAnimatedStyle } = useContext(ShoppingBagContext);
   const [currentIndex, setCurrentIndex] = useState(0);
-  // value to keep track of scrolling
+  // value to keep track of scrolling in main FlatList
   const translateX = useSharedValue(0);
   const scrollHandler = useAnimatedScrollHandler((event) => {
     translateX.value = event.contentOffset.x;
   });
+
+  // function tied to "onMomentumScrollEnd" in FlatList to calculate current index
   const onScrollEnd = (event) => {
     let pageNumber = Math.min(
       Math.max(
@@ -60,7 +62,7 @@ const BrowseScreen = () => {
   const activeIndex = useDerivedValue(() => {
     return translateX.value / SCREEN_WIDTH;
   });
-
+  // Animated style responsible for the color of screen background
   const animatedSecondaryColor = useAnimatedStyle(() => {
     const backgroundColor = interpolateColor(
       activeIndex.value,
@@ -69,6 +71,7 @@ const BrowseScreen = () => {
     );
     return { backgroundColor: backgroundColor };
   });
+  // Animated style responsible for the color of circle behind the shoe image
   const animatedPrimaryColor = useAnimatedStyle(() => {
     const backgroundColor = interpolateColor(
       activeIndex.value,
@@ -120,14 +123,12 @@ const BrowseScreen = () => {
       <Animated.View
         style={[styles.bottomDescriptionContainer, animatedSecondaryColor]}
       >
-        <TouchableOpacity onPress={changeSizeTextColor}>
-          <Image
-            source={require("../../assets/images/justdoit.png")}
-            style={styles.justDoItImage}
-            resizeMode="contain"
-          />
-        </TouchableOpacity>
-
+        <Image
+          source={require("../../assets/images/justdoit.png")}
+          style={styles.justDoItImage}
+          resizeMode="contain"
+        />
+        {/* Container of all data, including thumbnail picker and size picker */}
         <View style={styles.bottomRightContainer}>
           <View style={styles.additionalInfoContainer}>
             {NikeShoesDatabase[currentIndex].additional ? (

@@ -1,5 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useCallback } from "react";
 import { NikeShoesDatabase } from "../../assets/ShoesData";
 
 export const SizeChoiceContext = createContext();
@@ -10,17 +9,20 @@ export const SizeChoiceContextProvider = ({ children }) => {
     2: null,
     3: null,
   });
-  const addSizeChoice = (index, size, sizeObjectIndex) => {
-    if (NikeShoesDatabase[index].sizes[sizeObjectIndex].available === false) {
-      null;
-    } else {
-      if (chosenSize[index] === size) {
-        setChosenSize((prevState) => ({ ...prevState, [index]: null }));
+  const addSizeChoice = useCallback(
+    (index, size, sizeObjectIndex) => {
+      if (NikeShoesDatabase[index].sizes[sizeObjectIndex].available === false) {
+        null;
       } else {
-        setChosenSize((prevState) => ({ ...prevState, [index]: size }));
+        if (chosenSize[index] === size) {
+          setChosenSize((prevState) => ({ ...prevState, [index]: null }));
+        } else {
+          setChosenSize((prevState) => ({ ...prevState, [index]: size }));
+        }
       }
-    }
-  };
+    },
+    [chosenSize]
+  );
 
   return (
     <SizeChoiceContext.Provider
