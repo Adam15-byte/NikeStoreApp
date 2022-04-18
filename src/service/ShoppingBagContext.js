@@ -7,21 +7,25 @@ import Animated, {
   withTiming,
   withDelay,
   withSpring,
+  interpolateColor,
 } from "react-native-reanimated";
 import { COLORS } from "../../assets/COLORS";
 
 export const ShoppingBagContext = createContext();
 export const ShoppingBagContextProvider = ({ children }) => {
-  const selectSizeTextColor = useSharedValue(COLORS.black);
+  const selectSizeTextColor = useSharedValue(0);
+
   const sizeTextAnimatedStyle = useAnimatedStyle(() => {
-    return { color: selectSizeTextColor.value };
+    const color = interpolateColor(
+      selectSizeTextColor.value,
+      [0, 1],
+      [COLORS.black, COLORS.red]
+    );
+    return { color: color };
   });
   const changeSizeTextColor = () => {
-    selectSizeTextColor.value = COLORS.red;
-    selectSizeTextColor.value = withDelay(
-      1000,
-      withTiming(COLORS.black, { duration: 10 })
-    );
+    selectSizeTextColor.value = withTiming(1);
+    selectSizeTextColor.value = withDelay(1000, withTiming(0));
   };
 
   const [shoppingBag, setShoppingBag] = useState([]);
