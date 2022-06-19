@@ -22,7 +22,7 @@ The pictures were manually cut out to ensure transparent backgrounds.
 
 ## Technologies
 * React Native Stack Navigation
-* React Native Reanimated
+* React Native Reanimated 2
 * Hooks: useEffect, useState, useContext, createContext, useCallback
 
 ## Videos
